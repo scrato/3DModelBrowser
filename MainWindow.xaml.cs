@@ -41,18 +41,27 @@ namespace _3DModelBrowser
         {
             if (_isClosing) return;
             var pathDialog = new System.Windows.Forms.FolderBrowserDialog();
-            pathDialog.SelectedPath = Settings.LastPath;
+            pathDialog.SelectedPath = Directory.Exists(Settings.LastPath) ? Settings.LastPath : String.Empty;
             if (pathDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 var pathStr = pathDialog.SelectedPath;
-                Settings.LastPath = pathStr; 
-                CreateTabByPath(pathStr);
+                Settings.LastPath = pathStr;
+                CreateTabByPathRecursive(pathStr);
             }
             else
             {
                 if (tC.Items.Count == 1) Close();
                 _isClosing = true;
             }
+        }
+
+        private void CreateTabByPathRecursive(string path)
+        {
+            foreach (var dir in Directory.EnumerateDirectories(path))
+            {
+                CreateTabByPathRecursive(dir);
+            }
+            CreateTabByPath(path);
         }
 
         private void CreateTabByPath(string path)
