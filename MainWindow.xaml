@@ -4,16 +4,45 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_3DModelBrowser"
-        xmlns:helix="http://helix-toolkit.org/wpf"
+        xmlns:helix="http://helix-toolkit.org/wpf" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
-        Closed="Window_Closed"
+        Closed="Window_Closed" KeyUp="Window_KeyUp"
         Title="3D Model Browser" Height="450" Width="800">
-    <TabControl x:Name="tC">
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+    <TabControl x:Name="tC" Grid.Row="0">
         <TabItem Name="tAddBrowser" >
             <TabItem.Header>
                 <Button x:Name="bAdd" Content="+" Click="ButtonAddNewTab_Clicked" />
             </TabItem.Header>
         </TabItem>
     </TabControl>
+        <Grid  Grid.Row="1"  HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="*"  />
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Hinzufügen / Aktualisieren" Click="AddOrUpdate_Click" Margin="4"/>
+            <StackPanel Orientation="Horizontal" Grid.Column="1" >
+                <TextBlock Margin="4" Text="Altitude:" />
+                <Slider Name="slAltitude" Minimum="0" Maximum="360" MinWidth="100" Value="180" ValueChanged="Altitude_ValueChanged" Margin="4"  />
+                <TextBlock Margin="4" x:Name="tbAltitude" Text="180°" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Column="2" >
+                <TextBlock Margin="4" Text="Azimuth:" />
+                <Slider Name="slAzimuth" Minimum="0" Maximum="360" MinWidth="100" Value="180" ValueChanged="Azimuth_ValueChanged" Margin="4"  />
+                <TextBlock Margin="4" x:Name="tbAzimuth" Text="180°" />
+            </StackPanel>
+            <StackPanel  Grid.Column="3" Orientation="Horizontal" >
+                <TextBlock Text="Farbe:" Margin="4"/>
+                <xctk:ColorPicker MinWidth="100" Name="cPDefaultColor" SelectedColor="#424242" SelectedColorChanged="ColorPicker_SelectionChanged" Margin="4"  />
+            </StackPanel>
+        </Grid>
+    </Grid>
 </Window>
